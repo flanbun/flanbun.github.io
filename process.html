@@ -34,47 +34,6 @@
                 cursor: pointer;
             }
 
-            #drop-zone {
-                position: relative;
-                overflow: visible;
-                width: 100%;
-                margin: 0 auto;
-                max-width: 900px;
-                background: #f5f5f3;
-                border: 1px solid #ddd;
-            }
-
-            .spawned-img {
-                position: absolute;
-                object-fit: contain;
-                cursor: pointer;
-                opacity: 0;
-                transition: opacity 0.4s;
-            }
-            .spawned-img.visible {
-                opacity: 1;
-            }
-
-            .popup {
-                position: absolute;
-                background: #fff;
-                border: 1px solid #ddd;
-                border-radius: 10px;
-                padding: 10px 14px;
-                font-size: 13px;
-                pointer-events: none;
-                white-space: nowrap;
-                z-index: 10;
-                width: 180px;
-                box-sizing: border-box;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            }
-            .popup-name {
-                font-size: 15px;
-                font-weight: 600;
-                margin: 0;
-            }
-
             .controls {
                 display: flex;
                 align-items: center;
@@ -92,188 +51,156 @@
                 padding: 0;
             }
 
-            .next-lbl {
-                font-size: 12px;
-                color: #aaa;
-            }
-
-            #overlay {
-                display: none;
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 99;
-            }
-
-            .overlay-popup {
-                background: #fff;
-                border-radius: 10px;
-                padding: 24px;
-                max-width: 400px;
-                margin: 100px auto;
-                position: relative;
-            }
-
-            #browser {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #browser #search-bar {
-                display: flex;
-                background: lightgray;
-                padding: 5px 10px;
-                gap: 10px;
-            }
-
-            #browser #search-bar div {
-                flex-grow: 1;
-            }
-
-            #browser #search-bar .url {
-                background: white;
-                text-align: center;
-                flex-grow: 4;
-                border-radius: 30px;
-            }
-
-            #countEl {
-                color: white;
-                background: red;
-                padding: 3px 7px;
-                border-radius: 10px;
-            }
-
-            #webpage {
-                height: 700px;
-                overflow: auto;
-            }
-
-            #webpage .layout {
-                padding: 15px 15px;
-
-                display: grid;
-                grid:
-                    "header searchbar" auto
-                    "sidebar body" 1fr
-                    / 150px 1fr;
-                gap: 15px;
-            }
-
-            .header {
-                grid-area: header;
-            }
-
-            .header h2 {
-                margin: 0;
-            }
-
-            .searchbar {
-                grid-area: searchbar;
-                background: white;
-                padding: 5px 10px;
-                border-radius: 30px;
-                color: gray;
-            }
-
-            .sidebar {
-                grid-area: sidebar;
-            }
-
-            .sidebar .fake-button {
-                padding: 10px;
-                background: white;
-                border-radius: 10px;
-                text-align: center;
-            }
-
-            .sidebar ul {
-                margin: 10px 0;
-                list-style: none;
-                padding: 0;
-            }
-
-            .sidebar ul li {
-                display: block;
-                padding: 5px 10px;
-                border-bottom: 1px dotted gray;
-            }
-
-            .sidebar ul li:last-child {
-                border: none;
-            }
-
-            .sidebar ul li:hover {
-                font-weight: bold;
-            }
-
-            .body {
-                grid-area: body;
-            }
-
-            .body h3 {
-                margin: 0;
-                margin-bottom: 10px;
-            }
-
-            .body ul {
-                margin: 0;
-                padding: 0;
-                list-style: none;
-                background: white;
-            }
-
-            .body ul li {
-                padding: 10px 15px;
-                border-bottom: 1px silver dotted;
-            }
-
-            .body ul li:hover {
-                background: #f3f3f3;
-            }
-
-            .body ul li:last-child {
-                border: none;
+            .layout {
+                margin: 10px;
+                margin-bottom: 50px;
+                max-width: 650px;
             }
         </style>
     </head>
     <body>
-        <div id="overlay">
-            <div class="overlay-popup">
-                <p>
-                    <strong>Webcrawlie</strong> is a web extension that visualizes all of the creepy crawlies (ads,
-                    trackers, and webcrawlers) that follow you across the internet.
-                </p>
-                <p>
-                    For every ad, tracker, or webcrawler that your ad blocker - like uBlock, for example - detects, a
-                    little bug appears on your screen and doesn't go away.
-                </p>
-                <p>This page is a mockup of that functionality.</p>
-                <p>
-                    This page uses the typefaces Ouvrieres Rassasiees by Laure Azizi and distributed by
-                    <a href="https://velvetyne.fr/">Velvetyne</a>, and Karla by Jonny Pinhorn and distributed by Google
-                    Fonts.
-                </p>
-                <button onclick="closePopup()">Close</button>
-                <a href="/process.html"><button>Process</button></a>
-            </div>
-        </div>
-
-        <script>
-            function openPopup() {
-                document.getElementById("overlay").style.display = "block";
-            }
-            function closePopup() {
-                document.getElementById("overlay").style.display = "none";
-            }
-        </script>
         <div class="controls">
             <h1>Webcrawlies</h1>
             <div>
-                <a href="/"><button>Main Page</button></a>
+                <a href="/index.html"><button>Main Page</button></a>
             </div>
         </div>
-        
-        
+        <div class="layout">
+            <p>
+                Webcrawlies is my final project for the Spring 2026 Wednesday section of Principles of Interaction
+                Design with Professor Michael Arnold Mages. It is a visualization of the ads, trackers, and other web
+                crawlers that ad blockers detect. My objective with this project is to induce the same feelings of
+                disgust and grossness that insects cause in people, but with violators of their privacy and safety on
+                the internet.
+            </p>
+            <p>
+                I knew from the beginning that I wanted my final project in this class to have something to do with
+                online safety, which people are blissfully unaware -- or ignorant -- of. I considered the following
+                ideas:
+            </p>
+            <ul>
+                <li>
+                    A physical representation of the amount of data you store on your PC or online drives, in the form
+                    of something weighted
+                </li>
+                <li>A pair of glasses displaying pop-up ads</li>
+                <li>A visualization of the ads, trackers, and other web crawlers that an ad blocker detects</li>
+            </ul>
+            <p>
+                After some careful deliberation -- I figured that the physical representation of data was both too easy
+                and too uninspired, and that the pair of glasses displaying pop-up ads had the same issues, along with
+                feeling super cheesy -- I settled on the final option. I wanted to create some type of image or
+                experience that might bring to light the sheer amount of trackers on the internet trying to spy on your
+                online activity. I was inspired by a simple glance over at my uBlock ad blocker while open to an empty
+                page on Google Docs, and the horror I felt when the number on top of it was well over 100, despite the
+                document having been open for less than an hour.
+            </p>
+            <p>Like, is this not horrifying to anybody else?</p>
+            <p>
+                I have many friends who use the same ad blocker as me, often at my own recommendation. I appreciate
+                uBlock because it's free and easy for most people to use due to its availability as a Chrome and Firefox
+                extension, meaning people can install it without a second thought and avoid pop-up windows on whatever
+                websites they feel like using. However, I did not realize how many people don't particularly pay
+                attention to the numbers shown to them.
+            </p>
+            <p>
+                After speaking to a few people about their experience with ad blockers, I came to the following
+                conclusions:
+            </p>
+            <ul>
+                <li>Most people do not look at their ad blocker while working (it appears I am an outlier)</li>
+                <li>In fact, most people don't have it visible in their extensions tab at all</li>
+                <li>
+                    Most people that I mentioned the quantity to were surprised, but it was only after I phrased it like
+                    hundreds of people watching them at once were they truly horrified
+                </li>
+            </ul>
+            <p>I figured, then, that the visualization was truly necessary to nail this reality into people.</p>
+            <p>
+                The first idea for a visualization that came to mind while developing this project was simple and
+                straight to the point: eyes. I thought that eyes would be an appropriate moniker for a "tracker": I
+                wanted to indicate that each of these trackers were really someone, or even a team of people, with the
+                intentions of viewing your online activities and habits.
+            </p>
+            <p>
+                After implementing images of eyes onto several webpages, both cartoony and realistic, I realized that
+                even on me -- someone who might be overly paranoid -- these eyes did not provide the effect I was
+                looking for. So I thought of alternatives: what might people dislike on their screens? What are people
+                horrified by? What are people disgusted by? The memory that came to mind was a ride at Disneyworld that
+                has haunted me for the past fifteen years: the crawling feeling of insects on my behind on the It's
+                Tough to be a Bug ride at Disneyworld's Animal Kingdom. It was then I knew that I had to use insects on
+                the screen.
+            </p>
+            <p>
+                I created a mockup of flies on a computer screen. I presented all three of my mockups to the class,
+                where after a critique I settled on the insect idea even further. I received a number of suggestions:
+            </p>
+            <ul>
+                <li>Add more than just flies: maybe cockroaches and rats</li>
+                <li>Have one fly = one tracker, five flies = one cockroach, and five cockroaches = one rat</li>
+                <li>Maybe just keep the eyes? They freak me out!</li>
+            </ul>
+            <p>
+                I took the final suggestion into mind and acknowledged that if I were to launch this as a real product,
+                I would most likely have several different options for things that appear on a screen. However, I had to
+                move on from it due to the limited nature of our final project turnaround.
+            </p>
+            <p>
+                The first two suggestions, however, I was able to implement into the final project, though a bit
+                different. After attempting the fly / cockroach / rat hierarchy in a numerical way, I found that it was
+                maybe too crowded on the screen. So, instead, I included a variety of insects in the final product,
+                randomly representing one tracker each. For my purposes and limited time, this worked well.
+            </p>
+            <p>I also wanted to answer these questions directly, so here:</p>
+            <ul>
+                <li>
+                    Temporal: How does this interaction unfold through time? What's the rhythm?
+                    <ul>
+                        <li>
+                            In this interaction, the insects appear as the user continues to use the webpage, and as the
+                            number of trackers detected by the ad blocker increases. In this sense, the rhythm is not in
+                            the user's control.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Embodied: What are bodies doing? What's the biocost?
+                    <ul>
+                        <li>
+                            In this interaction, the user utilizes their body to use their device as usual. However, the
+                            fear or disgust induced by the insects might cause additional bodily stress.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Material: Why this medium/material? What does it afford that others don't?
+                    <ul>
+                        <li>
+                            Because this project surrounds the digital, the medium is also digital: code, or
+                            specifically HTML, CSS, and JavaScript. The internet is accessible to those who need to care
+                            about this issue: people who, well, use the internet.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Ethical: Who benefits? Who's excluded? What power dynamics are at play?
+                    <ul>
+                        <li>
+                            The people excluded in this issue are people who do not have access to devices that can run
+                            either the internet or this extension. This frames the issue that this product seeks to
+                            tackle as something perhaps "first-world": a problem that people without the resources to
+                            access the online do not have to face.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Context: Where does this live? How does context shape it?
+                    <ul>
+                        <li>This issue exists in the context of increasing online surveillance. Whether it is LLMs learning from online data, AI image generators looking through webpages to find source material, or security surveillance organizations like Palantir spying on the average citizen, it seeks to inform and encourage the user to be more mindful of the way they navigate the internet and how they use tools like ad blockers to keep their information safe online.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>If I had more time to complete this project, I probably would have implemented the browser extension itself rather than just a mock-up. I would have also included more information about each tracker. I hope to continue work on Webcrawlies in the future.</p>
+        </div>
     </body>
 </html>
