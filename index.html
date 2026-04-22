@@ -25,13 +25,22 @@
             h3 {
                 font-family: "ants", sans-serif;
             }
+            
+            h1 {
+                color: #ed028c;
+            }
 
             button {
                 font-family: inherit;
+                background: none;
+                border: none;
+                font-size: larger;
             }
 
             button:hover {
                 cursor: pointer;
+                font-weight: bold;
+                text-shadow: -2px 2px 0 #fff101;
             }
 
             #drop-zone {
@@ -124,6 +133,7 @@
                 background: lightgray;
                 padding: 5px 10px;
                 gap: 10px;
+                font-size: smaller;
             }
 
             #browser #search-bar div {
@@ -135,6 +145,7 @@
                 text-align: center;
                 flex-grow: 4;
                 border-radius: 30px;
+                padding: 5px;
             }
 
             #countEl {
@@ -174,6 +185,7 @@
                 padding: 5px 10px;
                 border-radius: 30px;
                 color: gray;
+                font-size: small;
             }
 
             .sidebar {
@@ -185,6 +197,13 @@
                 background: white;
                 border-radius: 10px;
                 text-align: center;
+                border: 1px solid gray;
+                font-weight: bold;
+            }
+            
+            .sidebar .fake-button:hover {
+                cursor: pointer;
+                background: #e6e6e6;
             }
 
             .sidebar ul {
@@ -205,6 +224,7 @@
 
             .sidebar ul li:hover {
                 font-weight: bold;
+                cursor: pointer;
             }
 
             .body {
@@ -230,6 +250,7 @@
 
             .body ul li:hover {
                 background: #f3f3f3;
+                cursor: pointer;
             }
 
             .body ul li:last-child {
