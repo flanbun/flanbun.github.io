@@ -3,10 +3,10 @@
 ════════════════════════════════ */
 const IMAGES = ["/img/fly-transparent.gif", "/img/roach-transparent.gif", "/img/spider-transparent.gif"];
 const AUDIO_URL = "/wav/buzz.wav";
-const LIMIT = 15;
+const LIMIT = 18;
 const IMG_SIZE = 48;
 const MIN_SEC = 1;
-const MAX_SEC = 10;
+const MAX_SEC = 8;
 const NAMES = [
     "Googlebot",
     "Bingbot",
