@@ -1,12 +1,12 @@
 /* ════════════════════════════════
-       EDITABLE VARIABLES
-    ════════════════════════════════ */
-const IMAGE_URL = "https://media.tenor.com/IscMmuATxqcAAAAi/fly-transparent.gif";
-const AUDIO_URL = ""; // ← paste your audio file URL here (.mp3, .wav, .ogg etc.)
-const LIMIT = 26;
+   EDITABLE VARIABLES
+════════════════════════════════ */
+const IMAGES = ["/img/fly-transparent.gif", "/img/roach-transparent.gif", "/img/spider-transparent.gif"];
+const AUDIO_URL = "/wav/buzz.wav";
+const LIMIT = 15;
 const IMG_SIZE = 48;
 const MIN_SEC = 1;
-const MAX_SEC = 5;
+const MAX_SEC = 10;
 const NAMES = [
     "Googlebot",
     "Bingbot",
@@ -122,6 +122,16 @@ let usedNames = [];
 
 document.getElementById("denomEl").textContent = LIMIT;
 
+function randImage() {
+    return IMAGES[Math.floor(Math.random() * IMAGES.length)];
+}
+function randDelay() {
+    return (Math.random() * (MAX_SEC - MIN_SEC) + MIN_SEC) * 1000;
+}
+function randRotation() {
+    return Math.floor(Math.random() * 360);
+}
+
 function playSound() {
     if (!AUDIO_URL) return;
     const audio = new Audio(AUDIO_URL);
@@ -134,13 +144,6 @@ function pickName() {
     const name = remaining[Math.floor(Math.random() * remaining.length)];
     usedNames.push(name);
     return name;
-}
-
-function randDelay() {
-    return (Math.random() * (MAX_SEC - MIN_SEC) + MIN_SEC) * 1000;
-}
-function randRotation() {
-    return Math.floor(Math.random() * 360);
 }
 
 function setButtons(state) {
@@ -182,7 +185,7 @@ function spawnOne() {
     const name = pickName();
 
     const img = document.createElement("img");
-    img.src = IMAGE_URL;
+    img.src = randImage();
     img.className = "spawned-img";
     img.style.width = IMG_SIZE + "px";
     img.style.height = IMG_SIZE + "px";
