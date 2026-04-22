@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Random Image Spawner</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cossette+Texte:wght@400;700&family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
+            rel="stylesheet" />
+        <style>
+            @font-face {
+                font-family: "ants";
+                src: url("/fonts/Ouvrieres-rassasiees.woff2");
+            }
+            body {
+                font-family: "Karla", "Courier New", "Gill Sans MT", sans-serif;
+                padding: 0;
+            }
+
+            h1,
+            h2,
+            h3 {
+                font-family: "ants", sans-serif;
+            }
+
+            button {
+                font-family: inherit;
+            }
+
+            button:hover {
+                cursor: pointer;
+            }
+
+            #drop-zone {
+                position: relative;
+                overflow: visible;
+                width: 100%;
+                margin: 0 auto;
+                max-width: 900px;
+                background: #f5f5f3;
+                border: 1px solid #ddd;
+            }
+
+            .spawned-img {
+                position: absolute;
+                object-fit: contain;
+                cursor: pointer;
+                opacity: 0;
+                transition: opacity 0.4s;
+            }
+            .spawned-img.visible {
+                opacity: 1;
+            }
+
+            .popup {
+                position: absolute;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 10px 14px;
+                font-size: 13px;
+                pointer-events: none;
+                white-space: nowrap;
+                z-index: 10;
+                width: 180px;
+                box-sizing: border-box;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+            .popup-name {
+                font-size: 15px;
+                font-weight: 600;
+                margin: 0;
+            }
+
+            .controls {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 12px;
+                z-index: 2;
+
+                padding: 15px;
+                gap: 30px;
+                background: white;
+            }
+
+            .controls h1 {
+                margin: 0;
+                padding: 0;
+            }
+
+            .next-lbl {
+                font-size: 12px;
+                color: #aaa;
+            }
+
+            #overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 99;
+            }
+
+            .overlay-popup {
+                background: #fff;
+                border-radius: 10px;
+                padding: 24px;
+                max-width: 400px;
+                margin: 100px auto;
+                position: relative;
+            }
+
+            #browser {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #browser #search-bar {
+                display: flex;
+                background: lightgray;
+                padding: 5px 10px;
+                gap: 10px;
+            }
+
+            #browser #search-bar div {
+                flex-grow: 1;
+            }
+
+            #browser #search-bar .url {
+                background: white;
+                text-align: center;
+                flex-grow: 4;
+                border-radius: 30px;
+            }
+
+            #countEl {
+                color: white;
+                background: red;
+                padding: 3px 7px;
+                border-radius: 10px;
+            }
+
+            #webpage {
+                height: 700px;
+                overflow: auto;
+            }
+
+            #webpage .layout {
+                padding: 15px 15px;
+
+                display: grid;
+                grid:
+                    "header searchbar" auto
+                    "sidebar body" 1fr
+                    / 150px 1fr;
+                gap: 15px;
+            }
+
+            .header {
+                grid-area: header;
+            }
+
+            .header h2 {
+                margin: 0;
+            }
+
+            .searchbar {
+                grid-area: searchbar;
+                background: white;
+                padding: 5px 10px;
+                border-radius: 30px;
+                color: gray;
+            }
+
+            .sidebar {
+                grid-area: sidebar;
+            }
+
+            .sidebar .fake-button {
+                padding: 10px;
+                background: white;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            .sidebar ul {
+                margin: 10px 0;
+                list-style: none;
+                padding: 0;
+            }
+
+            .sidebar ul li {
+                display: block;
+                padding: 5px 10px;
+                border-bottom: 1px dotted gray;
+            }
+
+            .sidebar ul li:last-child {
+                border: none;
+            }
+
+            .sidebar ul li:hover {
+                font-weight: bold;
+            }
+
+            .body {
+                grid-area: body;
+            }
+
+            .body h3 {
+                margin: 0;
+                margin-bottom: 10px;
+            }
+
+            .body ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                background: white;
+            }
+
+            .body ul li {
+                padding: 10px 15px;
+                border-bottom: 1px silver dotted;
+            }
+
+            .body ul li:hover {
+                background: #f3f3f3;
+            }
+
+            .body ul li:last-child {
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay">
+            <div class="overlay-popup">
+                <p>
+                    <strong>Webcrawlie</strong> is a web extension that visualizes all of the creepy crawlies (ads,
+                    trackers, and webcrawlers) that follow you across the internet.
+                </p>
+                <p>
+                    For every ad, tracker, or webcrawler that your ad blocker - like uBlock, for example - detects, a
+                    little bug appears on your screen and doesn't go away.
+                </p>
+                <p>This page is a mockup of that functionality.</p>
+                <p>
+                    This page uses the typefaces Ouvrieres Rassasiees by Laure Azizi and distributed by
+                    <a href="https://velvetyne.fr/">Velvetyne</a>, and Karla by Jonny Pinhorn and distributed by Google
+                    Fonts.
+                </p>
+                <button onclick="closePopup()">Close</button>
+                <a href="/process.html"><button>Process</button></a>
+            </div>
+        </div>
+
+        <script>
+            function openPopup() {
+                document.getElementById("overlay").style.display = "block";
+            }
+            function closePopup() {
+                document.getElementById("overlay").style.display = "none";
+            }
+        </script>
+        <div class="controls">
+            <h1>Webcrawlies</h1>
+            <div>
+                <button onclick="openPopup()">About</button>
+                <button id="startBtn" onclick="startSpawner()">Start</button>
+                <button id="stopBtn" onclick="stopSpawner()" disabled>Stop</button>
+                <button onclick="restartSpawner()">Restart</button>
+                <span class="next-lbl" id="nextLbl"></span>
+            </div>
+        </div>
+
+        <div id="drop-zone">
+            <div id="browser">
+                <div id="search-bar">
+                    <div>← →</div>
+                    <div class="url">mail.buggle.com</div>
+                    <div><span id="countEl">0</span></div>
+                </div>
+                <div id="webpage">
+                    <div class="layout">
+                        <div class="header"><h2>Bugmail</h2></div>
+                        <div class="searchbar">Search mail...</div>
+                        <div class="sidebar">
+                            <div class="fake-button">Compose</div>
+                            <ul>
+                                <li>Inbox</li>
+                                <li>Starred</li>
+                                <li>Snoozed</li>
+                                <li>Sent</li>
+                                <li>Drafts</li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <h3>Inbox</h3>
+                            <ul>
+                                <li>
+                                    <strong>Read-It</strong> u/worker-8911: My [1M] queen's [1F] new spawn [0.01M] is
+                                    hoarding all of the honey...
+                                </li>
+                                <li><strong>GitBug</strong> [GitBug] Please review this sign-in.</li>
+                                <li>
+                                    <strong>GitBug</strong> [GitBug] A Buggle identity has just been linked to your
+                                    GitBug account.
+                                </li>
+                                <li><strong>GitBug</strong> [GitBug] Your confirmation number is 01134.</li>
+                                <li>
+                                    <strong>Stickbug</strong> Bugsnax and other games from your Stickbug wishlist are on
+                                    sale...
+                                </li>
+                                <li>
+                                    <strong>Venmo</strong> insectina requested 8,000 bugbucks from you. Pay it back?...
+                                </li>
+                                <li><strong>Read-It</strong> u/mayflyguy: My [1M] wife [1F] is slowly dying...</li>
+                                <li>
+                                    <strong>The Hive</strong> Your new everyday accessory is here! Antennae jewelry for
+                                    30% off...
+                                </li>
+                                <li><strong>GitBug</strong> [GitBug] Your confirmation number is 29185.</li>
+                                <li><strong>GitBug</strong> [GitBug] Your confirmation number is 07042.</li>
+                                <li><strong>GitBug</strong> [GitBug] Your confirmation number is 21883.</li>
+                                <li>
+                                    <strong>Stickbug</strong> Hollow Knight and other games from your Stickbug wishlist
+                                    are on sale...
+                                </li>
+                                <li><strong>Paybug</strong> We're making some changes to our Privacy Policy.</li>
+                                <li><strong>Venmo</strong> A guide to privacy and safety on Venmo.</li>
+                                <li><strong>GitBug</strong> [GitBug] Your confirmation number is 33908.</li>
+                                <li>
+                                    <strong>Bugartist Mailing List</strong> Can art be boring? Yes, and let's fix it
+                                </li>
+                                <li>
+                                    <strong>Perfectly Imperfect</strong> Horse Vision shares their ultimate principle:
+                                    the path of least resistance
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/fly.js"></script>
+    </body>
+</html>
